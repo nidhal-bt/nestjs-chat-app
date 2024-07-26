@@ -3,3 +3,6 @@
 
 - Generate SQL migration files
   npx prisma migrate dev --name init
+
+- Open prisma studio
+  npx prisma studio
