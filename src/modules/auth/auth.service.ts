@@ -45,4 +45,30 @@ export class AuthService {
 
     return response;
   }
+
+  async signUp({ registerBody }: { registerBody: TSignUpBody }) {
+    const existingUser = await this.userService.getUser({
+      email: registerBody.email,
+    });
+
+    if (existingUser) {
+      throw new NotFoundException(
+        'Un compte existe déjà à cette adresse email.',
+      );
+    }
+
+    const hashedPassword = await this.bcryptService.hashPassword({
+      password: registerBody.password,
+    });
+
+    const createdUser = await this.userService.createUser({
+      email: registerBody.email,
+      password: hashedPassword,
+      firstName: registerBody.firstName,
+    });
+
+    const response = await this.autheticateUser({ userId: createdUser.id });
+
+    return response;
+  }
 }

@@ -33,6 +33,12 @@ export class AuthController {
     return this.authService.signIn({ authBody });
   }
 
+  @HttpCode(HttpStatus.CREATED)
+  @Post('register')
+  async signUp(@Body() registerBody: TSignUpBody) {
+    return this.authService.signUp({ registerBody });
+  }
+
   @UseGuards(JwtAuthGuard)
   @Get('currentUser')
   async authenticateUser(@Request() request: TRequestWithUser) {
