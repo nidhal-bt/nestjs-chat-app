@@ -4,17 +4,18 @@ import {
   UnauthorizedException,
 } from '@nestjs/common';
 import { TAuthBody, TSignUpBody } from './auth.controller';
-import { BcryptService } from 'src/utils/hashString';
+
 import { JwtService } from '@nestjs/jwt';
 import { UsersService } from '../users/users.service';
 import { TUserPayload } from './jwt.strategy';
+import { PasswordService } from './password.service';
 
 @Injectable()
 export class AuthService {
   constructor(
     private readonly userService: UsersService,
     private readonly jwtService: JwtService,
-    private readonly bcryptService: BcryptService,
+    private readonly passwordService: PasswordService,
   ) {}
 
   private async autheticateUser({ userId }: TUserPayload) {
@@ -32,7 +33,7 @@ export class AuthService {
       throw new NotFoundException("L'utilisateur n'existe pas.");
     }
 
-    const isPasswordSame = await this.bcryptService.isPasswordValid({
+    const isPasswordSame = await this.passwordService.validatePassword({
       hashedPassword: existingUser.password,
       password: authBody.password,
     });
@@ -57,7 +58,7 @@ export class AuthService {
       );
     }
 
-    const hashedPassword = await this.bcryptService.hashPassword({
+    const hashedPassword = await this.passwordService.hashPassword({
       password: registerBody.password,
     });
 
