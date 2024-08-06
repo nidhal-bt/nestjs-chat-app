@@ -3,4 +3,6 @@ model User {
   email String @unique
   firstName String?
   password String
+  resetPasswordToken String? @unique
+  isResettingPassword Boolean @default(false)
 }

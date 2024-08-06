@@ -1,0 +1,1 @@
+- 3rd party library that will get shared between nestjs modules

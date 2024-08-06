@@ -1,29 +1,18 @@
 import { plainToInstance } from 'class-transformer';
-import {
-  IsEnum,
-  IsNumber,
-  IsString,
-  Max,
-  Min,
-  validateSync,
-} from 'class-validator';
-
-// enum Environment {
-//   Development = 'development',
-//   Production = 'production',
-//   Test = 'test',
-//   Provision = 'provision',
-// }
+import { IsString, validateSync } from 'class-validator';
 
 class EnvironmentVariables {
-  // @IsEnum(Environment)
-  // NODE_ENV: Environment;
-
   @IsString()
   JWT_SECRET: string;
 
   @IsString()
   BCRYPT_SALT_OR_ROUND: string;
+
+  @IsString()
+  RESEND_API_KEY: string;
+
+  @IsString()
+  CLIENT_BASE_URL: string;
 }
 
 export function validate(config: Record<string, unknown>) {
