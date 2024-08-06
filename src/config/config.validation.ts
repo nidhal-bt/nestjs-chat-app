@@ -3,6 +3,9 @@ import { IsString, validateSync } from 'class-validator';
 
 class EnvironmentVariables {
   @IsString()
+  PORT: string = '3002';
+
+  @IsString()
   JWT_SECRET: string;
 
   @IsString()
