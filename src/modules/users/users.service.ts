@@ -1,18 +1,13 @@
 import { Injectable } from '@nestjs/common';
 import { User, Prisma } from '@prisma/client';
+import { DefaultArgs } from '@prisma/client/runtime/library';
 import { PrismaService } from 'src/prisma.service';
 
 @Injectable()
 export class UsersService {
   constructor(private readonly prisma: PrismaService) {}
 
-  async getAll(params: {
-    skip?: number;
-    take?: number;
-    cursor?: Prisma.UserWhereUniqueInput;
-    where?: Prisma.UserWhereInput;
-    orderBy?: Prisma.UserOrderByWithRelationInput;
-  }): Promise<User[]> {
+  async getAll(params: Prisma.UserFindManyArgs<DefaultArgs>): Promise<User[]> {
     const { skip, take, cursor, where, orderBy } = params;
     return this.prisma.user.findMany({
       skip,
@@ -35,10 +30,7 @@ export class UsersService {
     });
   }
 
-  async update(params: {
-    where: Prisma.UserWhereUniqueInput;
-    data: Prisma.UserUpdateInput;
-  }): Promise<User> {
+  async update(params: Prisma.UserUpdateArgs<DefaultArgs>): Promise<User> {
     const { where, data } = params;
     return this.prisma.user.update({
       data,
