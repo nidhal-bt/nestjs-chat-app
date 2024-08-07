@@ -6,10 +6,10 @@ export class UsersController {
   constructor(private readonly usersService: UsersService) {}
   @Get('')
   getUsers() {
-    return this.usersService.getUsers({});
+    return this.usersService.getAll({});
   }
   @Get('/:userId')
   getUser(@Param('userId') userId: string) {
-    return this.usersService.getUser({ id: userId });
+    return this.usersService.getOne({ id: userId });
   }
 }

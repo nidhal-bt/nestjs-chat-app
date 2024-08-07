@@ -13,11 +13,11 @@ import { AuthService } from './auth.service';
 import { JwtAuthGuard } from './guards/jwt-auth.guard';
 import { TRequestWithUser } from './jwt.strategy';
 import { UsersService } from '../users/users.service';
-import { CreateUserDto } from './dto/create-user.dto';
-import { LoginUserDto } from './dto/login-user.dto';
+import { CreateUserDto } from './dtos/create-user.dto';
+import { LoginUserDto } from './dtos/login-user.dto';
 import { Serialize } from 'src/common/interceptors/serialize.interceptor';
-import { UserDto } from './dto/user.dto';
-import { ResetUserPasswordDto } from './dto/reset-user-password.dto';
+import { UserDto } from './dtos/user.dto';
+import { ResetUserPasswordDto } from './dtos/reset-user-password.dto';
 
 @Controller('auth')
 export class AuthController {
@@ -61,6 +61,6 @@ export class AuthController {
   @Get('currentUser')
   @Serialize(UserDto)
   async getAuthenticatedUser(@Request() request: TRequestWithUser) {
-    return this.usersService.getUser({ id: request.user.userId });
+    return this.usersService.getOne({ id: request.user.userId });
   }
 }

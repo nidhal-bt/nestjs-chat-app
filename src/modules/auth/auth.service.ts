@@ -8,12 +8,12 @@ import { JwtService } from '@nestjs/jwt';
 import { UsersService } from '../users/users.service';
 import { TUserPayload } from './jwt.strategy';
 import { PasswordService } from './password.service';
-import { CreateUserDto } from './dto/create-user.dto';
-import { LoginUserDto } from './dto/login-user.dto';
+import { CreateUserDto } from './dtos/create-user.dto';
+import { LoginUserDto } from './dtos/login-user.dto';
 import { MailerService } from 'src/shared/services/mailer.service';
 import { ConfigService } from '@nestjs/config';
 import { Config } from 'src/config';
-import { ResetUserPasswordDto } from './dto/reset-user-password.dto';
+import { ResetUserPasswordDto } from './dtos/reset-user-password.dto';
 
 @Injectable()
 export class AuthService {
@@ -32,7 +32,7 @@ export class AuthService {
   }
 
   async signIn({ authBody }: { authBody: LoginUserDto }) {
-    const existingUser = await this.userService.getUser({
+    const existingUser = await this.userService.getOne({
       email: authBody.email,
     });
 
@@ -55,7 +55,7 @@ export class AuthService {
   }
 
   async signUp({ registerBody }: { registerBody: CreateUserDto }) {
-    const existingUser = await this.userService.getUser({
+    const existingUser = await this.userService.getOne({
       email: registerBody.email,
     });
 
@@ -69,7 +69,7 @@ export class AuthService {
       password: registerBody.password,
     });
 
-    const createdUser = await this.userService.createUser({
+    const createdUser = await this.userService.create({
       email: registerBody.email,
       password: hashedPassword,
       firstName: registerBody.firstName,
@@ -87,7 +87,7 @@ export class AuthService {
   }
 
   async resetUserPassword({ email }: { email: string }) {
-    const existingUser = await this.userService.getUser({
+    const existingUser = await this.userService.getOne({
       email,
     });
 
@@ -105,7 +105,7 @@ export class AuthService {
       userId: existingUser.id,
     });
 
-    await this.userService.updateUser({
+    await this.userService.update({
       data: {
         isResettingPassword: true,
         resetPasswordToken: createdToken,
@@ -132,7 +132,7 @@ export class AuthService {
     if (!token) {
       throw new NotFoundException("Le token n'existe pas.");
     }
-    const existingUser = await this.userService.getUser({
+    const existingUser = await this.userService.getOne({
       resetPasswordToken: token,
     });
 
@@ -153,7 +153,7 @@ export class AuthService {
   }
   async resetPassword({ token, password }: ResetUserPasswordDto) {
     console.log('token', token);
-    const existingUser = await this.userService.getUser({
+    const existingUser = await this.userService.getOne({
       resetPasswordToken: token,
     });
 
@@ -171,7 +171,7 @@ export class AuthService {
       password: password,
     });
 
-    await this.userService.updateUser({
+    await this.userService.update({
       data: {
         isResettingPassword: false,
         resetPasswordToken: null,
