@@ -18,10 +18,8 @@ export class UsersService {
     });
   }
 
-  async getOne(userWhereUniqueInput: Prisma.UserWhereUniqueInput) {
-    return this.prisma.user.findUnique({
-      where: userWhereUniqueInput,
-    });
+  async getOne(userUniqueInput: Prisma.UserFindUniqueArgs<DefaultArgs>) {
+    return this.prisma.user.findUnique(userUniqueInput);
   }
 
   async create(data: Prisma.UserCreateInput): Promise<User> {
@@ -38,9 +36,7 @@ export class UsersService {
     });
   }
 
-  async delete(where: Prisma.UserWhereUniqueInput): Promise<User> {
-    return this.prisma.user.delete({
-      where,
-    });
+  async delete(args: Prisma.UserDeleteArgs<DefaultArgs>): Promise<User> {
+    return this.prisma.user.delete(args);
   }
 }

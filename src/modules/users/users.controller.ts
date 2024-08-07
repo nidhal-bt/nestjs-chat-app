@@ -10,6 +10,6 @@ export class UsersController {
   }
   @Get('/:userId')
   getUser(@Param('userId') userId: string) {
-    return this.usersService.getOne({ id: userId });
+    return this.usersService.getOne({ where: { id: userId } });
   }
 }
