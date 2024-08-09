@@ -1,0 +1,12 @@
+model ChatMessage {
+  id String @id @default(cuid())
+  content String
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+  sender User @relation(fields: [senderId], references: [id])
+  senderId String
+  conversation Conversation @relation(fields: [chatId], references: [id])
+  chatId String
+  @@index([chatId])
+  @@index([senderId])
+}

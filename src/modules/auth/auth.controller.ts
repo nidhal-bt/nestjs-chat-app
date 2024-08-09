@@ -61,6 +61,6 @@ export class AuthController {
   @Get('currentUser')
   @Serialize(UserDto)
   async getAuthenticatedUser(@Request() request: TRequestWithUser) {
-    return this.usersService.getOne({ id: request.user.userId });
+    return this.usersService.getOne({ where: { id: request.user.userId } });
   }
 }

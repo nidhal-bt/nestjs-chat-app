@@ -18,7 +18,7 @@
     "test:cov": "jest --coverage",
     "test:debug": "node --inspect-brk -r tsconfig-paths/register -r ts-node/register node_modules/.bin/jest --runInBand",
     "test:e2e": "jest --config ./test/jest-e2e.json",
-    "migrate:push": "dotenv -e .env.development -- npx prisma db push",
+    "prisma:push": "dotenv -e .env.development -- npx prisma db push",
     "migrate:migrate": "dotenv -e .env.development -- npx prisma migrate dev --name init",
     "prisma:generate": "dotenv -e .env.development -- npx prisma generate",
     "prisma:studio": "dotenv -e .env.development -- npx prisma studio",
@@ -32,6 +32,8 @@
     "@nestjs/mapped-types": "*",
     "@nestjs/passport": "^10.0.3",
     "@nestjs/platform-express": "^10.0.0",
+    "@nestjs/platform-socket.io": "^10.3.10",
+    "@nestjs/websockets": "^10.3.10",
     "@prisma/client": "^5.17.0",
     "@types/bcrypt": "^5.0.2",
     "@types/passport-jwt": "^4.0.1",
@@ -44,6 +46,7 @@
     "reflect-metadata": "^0.1.13",
     "resend": "^1.0.0",
     "rxjs": "^7.8.1",
+    "socket.io": "^4.7.5",
     "typescript": "^5.5.3"
   },
   "devDependencies": {

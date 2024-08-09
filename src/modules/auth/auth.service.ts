@@ -33,7 +33,7 @@ export class AuthService {
 
   async signIn({ authBody }: { authBody: LoginUserDto }) {
     const existingUser = await this.userService.getOne({
-      email: authBody.email,
+      where: { email: authBody.email },
     });
 
     if (!existingUser) {
@@ -56,7 +56,7 @@ export class AuthService {
 
   async signUp({ registerBody }: { registerBody: CreateUserDto }) {
     const existingUser = await this.userService.getOne({
-      email: registerBody.email,
+      where: { email: registerBody.email },
     });
 
     if (existingUser) {
@@ -88,7 +88,7 @@ export class AuthService {
 
   async resetUserPassword({ email }: { email: string }) {
     const existingUser = await this.userService.getOne({
-      email,
+      where: { email },
     });
 
     if (!existingUser) {
@@ -133,7 +133,7 @@ export class AuthService {
       throw new NotFoundException("Le token n'existe pas.");
     }
     const existingUser = await this.userService.getOne({
-      resetPasswordToken: token,
+      where: { resetPasswordToken: token },
     });
 
     if (!existingUser) {
@@ -154,7 +154,7 @@ export class AuthService {
   async resetPassword({ token, password }: ResetUserPasswordDto) {
     console.log('token', token);
     const existingUser = await this.userService.getOne({
-      resetPasswordToken: token,
+      where: { resetPasswordToken: token },
     });
 
     if (!existingUser) {

@@ -5,4 +5,6 @@ model User {
   password String
   resetPasswordToken String? @unique
   isResettingPassword Boolean @default(false)
+  conversations Conversation[]
+  sentMessage ChatMessage[]
 }

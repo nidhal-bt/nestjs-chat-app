@@ -4,19 +4,23 @@ import { AuthModule } from './modules/auth/auth.module';
 import { ConfigModule } from '@nestjs/config';
 import { validate } from './config';
 import { SharedModule } from './shared/shared.module';
+import { AppGateway } from './app.gateway';
+import { ChatsModule } from './modules/chats/chats.module';
+import { SocketModule } from './socket/socket.module';
 
 @Module({
   imports: [
     ConfigModule.forRoot({
       isGlobal: true,
-      // envFilePath: `.env.${process.env.NODE_ENV}`,
       validate,
     }),
     UsersModule,
     AuthModule,
     SharedModule,
+    ChatsModule,
+    SocketModule,
   ],
   controllers: [],
-  providers: [],
+  providers: [AppGateway],
 })
 export class AppModule {}
