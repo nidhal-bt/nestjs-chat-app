@@ -6,14 +6,16 @@ import {
 
 import { JwtService } from '@nestjs/jwt';
 import { UsersService } from '../users/users.service';
-import { TUserPayload } from './jwt.strategy';
+
 import { PasswordService } from './password.service';
 import { CreateUserDto } from './dtos/create-user.dto';
 import { LoginUserDto } from './dtos/login-user.dto';
-import { MailerService } from 'src/shared/services/mailer.service';
+
 import { ConfigService } from '@nestjs/config';
 import { Config } from 'src/config';
 import { ResetUserPasswordDto } from './dtos/reset-user-password.dto';
+import { MailerService } from 'src/shared/services/mailer/mailer.service';
+import { TAuthUser } from './jwt.strategy';
 
 @Injectable()
 export class AuthService {
@@ -25,7 +27,7 @@ export class AuthService {
     private readonly configService: ConfigService,
   ) {}
 
-  private async autheticateUser({ userId }: TUserPayload) {
+  private async autheticateUser({ userId }: TAuthUser) {
     return {
       access_token: await this.jwtService.signAsync({ userId }),
     };
@@ -152,7 +154,6 @@ export class AuthService {
     };
   }
   async resetPassword({ token, password }: ResetUserPasswordDto) {
-    console.log('token', token);
     const existingUser = await this.userService.getOne({
       where: { resetPasswordToken: token },
     });

@@ -7,12 +7,15 @@ import {
   Request,
   UseGuards,
 } from '@nestjs/common';
-import { ChatsService } from './chats.service';
+import { ChatsService } from './services/chats.service';
 import { JwtAuthGuard } from '../auth/guards/jwt-auth.guard';
 import { SendChatDto } from './dtos/send-chat.dto';
-import { TRequestWithUser } from '../auth/jwt.strategy';
-import { ConversationsService } from './conversations.service';
+
+import { ConversationsService } from './services/conversations.service';
 import { CreateConversationDto } from './dtos/create-conversation.dto';
+import { AuthUser } from '../auth/decorator/auth-user.decorator';
+import { User } from '@prisma/client';
+import { TAuthUser } from '../auth/jwt.strategy';
 
 @Controller('chat')
 export class ChatsController {
@@ -25,11 +28,11 @@ export class ChatsController {
   @Post()
   async createConversation(
     @Body() createConversation: CreateConversationDto,
-    @Request() request: TRequestWithUser,
+    @AuthUser() user: TAuthUser,
   ) {
     return this.conversationsService.createConversation({
       createConversation,
-      userId: request.user.userId,
+      userId: user.userId,
     });
   }
 
@@ -38,20 +41,20 @@ export class ChatsController {
   async sendChat(
     @Param('conversationId') conversationId: string,
     @Body() sendChatDto: SendChatDto,
-    @Request() request: TRequestWithUser,
+    @AuthUser() user: TAuthUser,
   ) {
     return this.chatService.sendChat({
       sendChatDto,
       conversationId,
-      senderId: request.user.userId,
+      senderId: user.userId,
     });
   }
 
   @UseGuards(JwtAuthGuard)
   @Get()
-  async getConversations(@Request() request: TRequestWithUser) {
+  async getConversations(@AuthUser() user: TAuthUser) {
     return this.chatService.getConversations({
-      userId: request.user.userId,
+      userId: user.userId,
     });
   }
 
@@ -59,10 +62,10 @@ export class ChatsController {
   @Get(':conversationId')
   async getConversation(
     @Param('conversationId') conversationId: string,
-    @Request() request: TRequestWithUser,
+    @AuthUser() user: TAuthUser,
   ) {
     return this.chatService.getConversation({
-      userId: request.user.userId,
+      userId: user.userId,
       conversationId,
     });
   }

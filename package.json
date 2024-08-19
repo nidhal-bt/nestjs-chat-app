@@ -19,12 +19,14 @@
     "test:debug": "node --inspect-brk -r tsconfig-paths/register -r ts-node/register node_modules/.bin/jest --runInBand",
     "test:e2e": "jest --config ./test/jest-e2e.json",
     "prisma:push": "dotenv -e .env.development -- npx prisma db push",
-    "migrate:migrate": "dotenv -e .env.development -- npx prisma migrate dev --name init",
+    "prisma:migrate": "dotenv -e .env.development -- npx prisma migrate dev --name init",
     "prisma:generate": "dotenv -e .env.development -- npx prisma generate",
     "prisma:studio": "dotenv -e .env.development -- npx prisma studio",
     "migrate:push:test": "dotenv -e .env.test -- npx prisma db push"
   },
   "dependencies": {
+    "@aws-sdk/client-s3": "^3.629.0",
+    "@aws-sdk/s3-request-presigner": "^3.633.0",
     "@nestjs/common": "^10.0.0",
     "@nestjs/config": "^3.2.3",
     "@nestjs/core": "^10.0.0",
@@ -34,6 +36,7 @@
     "@nestjs/platform-express": "^10.0.0",
     "@nestjs/platform-socket.io": "^10.3.10",
     "@nestjs/websockets": "^10.3.10",
+    "@paralleldrive/cuid2": "^2.2.2",
     "@prisma/client": "^5.17.0",
     "@types/bcrypt": "^5.0.2",
     "@types/passport-jwt": "^4.0.1",

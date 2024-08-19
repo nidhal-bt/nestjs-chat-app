@@ -11,13 +11,15 @@ import {
 } from '@nestjs/common';
 import { AuthService } from './auth.service';
 import { JwtAuthGuard } from './guards/jwt-auth.guard';
-import { TRequestWithUser } from './jwt.strategy';
+
 import { UsersService } from '../users/users.service';
 import { CreateUserDto } from './dtos/create-user.dto';
 import { LoginUserDto } from './dtos/login-user.dto';
 import { Serialize } from 'src/common/interceptors/serialize.interceptor';
 import { UserDto } from './dtos/user.dto';
 import { ResetUserPasswordDto } from './dtos/reset-user-password.dto';
+import { AuthUser } from './decorator/auth-user.decorator';
+import { TAuthUser } from './jwt.strategy';
 
 @Controller('auth')
 export class AuthController {
@@ -53,14 +55,12 @@ export class AuthController {
   @HttpCode(HttpStatus.OK)
   @Post('reset-password-token')
   async resetPasswordToken(@Body() body: ResetUserPasswordDto) {
-    console.log('body', body);
     return this.authService.resetPassword(body);
   }
 
   @UseGuards(JwtAuthGuard)
-  @Get('currentUser')
   @Serialize(UserDto)
-  async getAuthenticatedUser(@Request() request: TRequestWithUser) {
-    return this.usersService.getOne({ where: { id: request.user.userId } });
+  async getAuthenticatedUser(@AuthUser() user: TAuthUser) {
+    return this.usersService.getOne({ where: { id: user.userId } });
   }
 }

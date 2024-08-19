@@ -9,4 +9,7 @@ export class UserDto {
 
   @Expose()
   firstName: string;
+
+  @Expose()
+  avatarFileKye: string;
 }

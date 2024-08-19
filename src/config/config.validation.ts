@@ -16,6 +16,18 @@ class EnvironmentVariables {
 
   @IsString()
   CLIENT_BASE_URL: string;
+
+  @IsString()
+  AWS_S3_ACCESS_KEY: string;
+
+  @IsString()
+  AWS_S3_SECRET_ACCESS_KEY: string;
+
+  @IsString()
+  AWS_S3_BUCKET_NAME: string;
+
+  @IsString()
+  AWS_S3_REGION_NAME: string;
 }
 
 export function validate(config: Record<string, unknown>) {

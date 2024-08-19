@@ -1,40 +1,40 @@
 import { Injectable, NotFoundException } from '@nestjs/common';
 import { Conversation, Prisma } from '@prisma/client';
 import { PrismaService } from 'src/prisma.service';
-import { CreateConversationDto } from './dtos/create-conversation.dto';
+import { CreateConversationDto } from '../dtos/create-conversation.dto';
 import { DefaultArgs } from '@prisma/client/runtime/library';
 
 @Injectable()
 export class ConversationsService {
   constructor(private readonly prisma: PrismaService) {}
 
-  async getAll(
-    params: Prisma.ConversationFindManyArgs<DefaultArgs>,
-  ): Promise<Conversation[]> {
-    const { skip, take, cursor, where, orderBy } = params;
-    return this.prisma.conversation.findMany({
-      skip,
-      take,
-      cursor,
-      where,
-      orderBy,
-    });
-  }
-
-  async getOne(
-    conversationWhereUniqueInput: Prisma.ConversationFindUniqueArgs<DefaultArgs>,
+  async getAll<T extends Prisma.ConversationFindManyArgs>(
+    params: Prisma.SelectSubset<T, Prisma.UserFindManyArgs>,
   ) {
-    return this.prisma.conversation.findUnique(conversationWhereUniqueInput);
+    return this.prisma.conversation.findMany(params);
   }
 
-  async create(data: Prisma.ConversationCreateInput) {
+  async getOne<T extends Prisma.ConversationFindUniqueArgs>(
+    conversationWhereUniqueInput: Prisma.SelectSubset<
+      T,
+      Prisma.ConversationFindUniqueArgs
+    >,
+  ) {
+    return this.prisma.conversation.findUnique<T>(conversationWhereUniqueInput);
+  }
+
+  async create<T extends Prisma.ConversationCreateArgs>(
+    data: Prisma.SelectSubset<T, Prisma.ConversationCreateArgs>,
+  ) {
     return this.prisma.conversation.create({
       data,
     });
   }
 
-  async update(params: Prisma.ConversationUpdateArgs) {
-    return this.prisma.conversation.update(params);
+  async update<T extends Prisma.ConversationUpdateArgs>(
+    params: Prisma.SelectSubset<T, Prisma.ConversationUpdateArgs>,
+  ) {
+    return this.prisma.conversation.update<T>(params);
   }
 
   async delete(
@@ -70,15 +70,17 @@ export class ConversationsService {
       throw new NotFoundException("L'utilisateur n'existe pas.");
     }
     const createdConversation = await this.create({
-      users: {
-        connect: [
-          {
-            id: existingUser.id,
-          },
-          {
-            id: existingRecipient.id,
-          },
-        ],
+      data: {
+        users: {
+          connect: [
+            {
+              id: existingUser.id,
+            },
+            {
+              id: existingRecipient.id,
+            },
+          ],
+        },
       },
     });
 

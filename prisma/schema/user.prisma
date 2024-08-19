@@ -3,6 +3,7 @@ model User {
   email String @unique
   firstName String?
   password String
+  avatarFileKye String? @unique
   resetPasswordToken String? @unique
   isResettingPassword Boolean @default(false)
   conversations Conversation[]

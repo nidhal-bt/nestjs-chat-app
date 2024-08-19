@@ -4,8 +4,7 @@ import { Injectable } from '@nestjs/common';
 import { ConfigService } from '@nestjs/config';
 import { Config } from 'src/config';
 
-export type TUserPayload = { userId: string };
-export type TRequestWithUser = { user: TUserPayload };
+export type TAuthUser = { userId: string };
 @Injectable()
 export class JwtStrategy extends PassportStrategy(Strategy) {
   constructor(private configService: ConfigService) {
@@ -16,7 +15,7 @@ export class JwtStrategy extends PassportStrategy(Strategy) {
     });
   }
 
-  async validate({ userId }: TUserPayload) {
+  async validate({ userId }: TAuthUser) {
     return { userId };
   }
 }
