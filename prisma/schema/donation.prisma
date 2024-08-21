@@ -1,0 +1,18 @@
+model Donation {
+  id String @id @default(cuid())
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+  stripeProductId String
+  stripePriceId String @unique
+
+  givingUser User @relation("givingUser",fields: [givingUserId], references: [id])
+  givingUserId String
+
+  receivingUser User @relation("receivingUser",fields: [receivingUserId], references: [id])
+  receivingUserId String
+
+  amount Int?
+
+  @@index([givingUserId])
+  @@index([receivingUserId])
+  }

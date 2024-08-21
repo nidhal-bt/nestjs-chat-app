@@ -7,6 +7,7 @@ import { SharedModule } from './shared/shared.module';
 import { AppGateway } from './app.gateway';
 import { ChatsModule } from './modules/chats/chats.module';
 import { SocketModule } from './socket/socket.module';
+import { DonationsModule } from './modules/donations/donations.module';
 
 @Module({
   imports: [
@@ -19,6 +20,7 @@ import { SocketModule } from './socket/socket.module';
     SharedModule,
     ChatsModule,
     SocketModule,
+    DonationsModule,
   ],
   controllers: [],
   providers: [AppGateway],

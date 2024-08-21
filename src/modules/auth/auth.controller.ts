@@ -60,7 +60,7 @@ export class AuthController {
 
   @UseGuards(JwtAuthGuard)
   @Serialize(UserDto)
-  async getAuthenticatedUser(@AuthUser() user: TAuthUser) {
-    return this.usersService.getOne({ where: { id: user.userId } });
+  async getAuthenticatedUser(@AuthUser() { userId }: TAuthUser) {
+    return this.usersService.getOne({ where: { id: userId } });
   }
 }

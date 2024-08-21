@@ -28,11 +28,11 @@ export class ChatsController {
   @Post()
   async createConversation(
     @Body() createConversation: CreateConversationDto,
-    @AuthUser() user: TAuthUser,
+    @AuthUser() { userId }: TAuthUser,
   ) {
     return this.conversationsService.createConversation({
       createConversation,
-      userId: user.userId,
+      userId: userId,
     });
   }
 
@@ -41,12 +41,12 @@ export class ChatsController {
   async sendChat(
     @Param('conversationId') conversationId: string,
     @Body() sendChatDto: SendChatDto,
-    @AuthUser() user: TAuthUser,
+    @AuthUser() { userId }: TAuthUser,
   ) {
     return this.chatService.sendChat({
       sendChatDto,
       conversationId,
-      senderId: user.userId,
+      senderId: userId,
     });
   }
 
@@ -62,10 +62,10 @@ export class ChatsController {
   @Get(':conversationId')
   async getConversation(
     @Param('conversationId') conversationId: string,
-    @AuthUser() user: TAuthUser,
+    @AuthUser() { userId }: TAuthUser,
   ) {
     return this.chatService.getConversation({
-      userId: user.userId,
+      userId: userId,
       conversationId,
     });
   }

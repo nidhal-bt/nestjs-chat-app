@@ -8,4 +8,8 @@ model User {
   isResettingPassword Boolean @default(false)
   conversations Conversation[]
   sentMessage ChatMessage[]
+  stripeAccountId String? @unique
+  stripeProductId String? @unique
+  givenDonations    Donation[] @relation("givingUser")
+  receivedDonations Donation[] @relation("receivingUser")
 }

@@ -28,6 +28,15 @@ class EnvironmentVariables {
 
   @IsString()
   AWS_S3_REGION_NAME: string;
+
+  @IsString()
+  STRIPE_SECRET_KEY: string;
+
+  @IsString()
+  STRIPE_API_VERSION: string;
+
+  @IsString()
+  STRIPE_WEBHOOK_SECRET: string;
 }
 
 export function validate(config: Record<string, unknown>) {

@@ -1,3 +1,5 @@
+import type { Stripe } from 'stripe';
+
 export interface Config {
   port: string;
   bcryptSaltOrRound: string | number;
@@ -8,4 +10,7 @@ export interface Config {
   awsS3SecretAccessKey: string;
   awsS3BucketName: string;
   awsS3RegionName: string;
+  stripeSecretKey: string;
+  stripeApiVersion: Stripe.LatestApiVersion;
+  stripeWebhookSecret: string;
 }
