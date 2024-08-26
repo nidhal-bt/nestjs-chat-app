@@ -6,16 +6,22 @@ class EnvironmentVariables {
   PORT: string = '3002';
 
   @IsString()
+  CLIENT_BASE_URL: string;
+
+  @IsString()
+  DATABASE_URL: string;
+
+  @IsString()
   JWT_SECRET: string;
+
+  @IsString()
+  JWT_EXPIRE: string;
 
   @IsString()
   BCRYPT_SALT_OR_ROUND: string;
 
   @IsString()
   RESEND_API_KEY: string;
-
-  @IsString()
-  CLIENT_BASE_URL: string;
 
   @IsString()
   AWS_S3_ACCESS_KEY: string;

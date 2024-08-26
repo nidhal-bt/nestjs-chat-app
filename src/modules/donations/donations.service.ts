@@ -6,7 +6,7 @@ import {
 } from '@nestjs/common';
 import { StripeService } from 'src/shared/services/stripe/stripe.service';
 import { UsersService } from '../users/users.service';
-import { PrismaService } from 'src/prisma.service';
+import { PrismaService } from 'src/prisma/prisma.service';
 import { Prisma } from '@prisma/client';
 import {
   type Request as RequestType,

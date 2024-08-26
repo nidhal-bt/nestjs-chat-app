@@ -2,7 +2,7 @@ import { Injectable, NotFoundException } from '@nestjs/common';
 import { User, Prisma } from '@prisma/client';
 import { DefaultArgs } from '@prisma/client/runtime/library';
 import { IFile } from 'src/common/interfaces';
-import { PrismaService } from 'src/prisma.service';
+import { PrismaService } from 'src/prisma/prisma.service';
 import { AwsS3Service } from 'src/shared/services/aws-s3/aws-s3.service';
 
 @Injectable()
@@ -34,7 +34,7 @@ export class UsersService {
   ) {
     const user = await this.prisma.user.findUnique<T>(userUniqueInput);
 
-    if (!!user.avatarFileKye) {
+    if (!!user?.avatarFileKye) {
       const avatarUrl = await this.awsS3Service.getFileSignedUrl({
         fileKey: user.avatarFileKye,
       });

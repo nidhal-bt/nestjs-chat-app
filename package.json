@@ -21,8 +21,7 @@
     "prisma:push": "dotenv -e .env.development -- npx prisma db push",
     "prisma:migrate": "dotenv -e .env.development -- npx prisma migrate dev --name init",
     "prisma:generate": "dotenv -e .env.development -- npx prisma generate",
-    "prisma:studio": "dotenv -e .env.development -- npx prisma studio",
-    "migrate:push:test": "dotenv -e .env.test -- npx prisma db push"
+    "prisma:studio": "dotenv -e .env.development -- npx prisma studio"
   },
   "dependencies": {
     "@aws-sdk/client-s3": "^3.629.0",

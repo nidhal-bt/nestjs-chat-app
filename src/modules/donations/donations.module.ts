@@ -3,7 +3,7 @@ import { DonationsController } from './donations.controller';
 import { DonationsService } from './donations.service';
 import { SharedModule } from 'src/shared/shared.module';
 import { UsersModule } from '../users/users.module';
-import { PrismaService } from 'src/prisma.service';
+import { PrismaService } from 'src/prisma/prisma.service';
 
 @Module({
   controllers: [DonationsController],

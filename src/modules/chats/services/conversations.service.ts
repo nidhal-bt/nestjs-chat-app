@@ -1,6 +1,6 @@
 import { Injectable, NotFoundException } from '@nestjs/common';
 import { Conversation, Prisma } from '@prisma/client';
-import { PrismaService } from 'src/prisma.service';
+import { PrismaService } from 'src/prisma/prisma.service';
 import { CreateConversationDto } from '../dtos/create-conversation.dto';
 import { DefaultArgs } from '@prisma/client/runtime/library';
 

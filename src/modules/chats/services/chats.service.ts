@@ -1,6 +1,6 @@
 import { Injectable, NotFoundException } from '@nestjs/common';
 import { SendChatDto } from '../dtos/send-chat.dto';
-import { PrismaService } from 'src/prisma.service';
+import { PrismaService } from 'src/prisma/prisma.service';
 import { Prisma, ChatMessage, Conversation } from '@prisma/client';
 import { UsersService } from '../../users/users.service';
 import { ConversationsService } from './conversations.service';
