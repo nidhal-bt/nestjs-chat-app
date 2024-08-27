@@ -120,7 +120,7 @@ export class AuthService {
     await this.mailerService.sendEmail({
       to: 'bentaaritn@gmail.com',
       subject: 'test mail sender',
-      body: `<strong>Update password with new token: ${this.configService.get<Config['clienUrl']>('CLIENT_BASE_URL')}/token=${createdToken} </strong>`,
+      body: `<strong>Update password with new token: ${this.configService.get<Config['clientBaseUrl']>('CLIENT_BASE_URL')}/token=${createdToken} </strong>`,
     });
 
     return {

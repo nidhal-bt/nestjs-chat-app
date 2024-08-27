@@ -2,7 +2,7 @@ import type { Stripe } from 'stripe';
 
 export interface Config {
   port: string;
-  clienBaseUrl: string;
+  clientBaseUrl: string;
   databaseUrl: string;
   jwtSecret: string;
   jwtExpire: string;

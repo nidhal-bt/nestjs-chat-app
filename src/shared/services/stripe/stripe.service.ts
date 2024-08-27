@@ -32,8 +32,9 @@ export class StripeService {
     return this.stripe.accountLinks.create({
       account: accountId,
       refresh_url:
-        this.configService.get<Config['clienUrl']>('CLIENT_BASE_URL'),
-      return_url: this.configService.get<Config['clienUrl']>('CLIENT_BASE_URL'),
+        this.configService.get<Config['clientBaseUrl']>('CLIENT_BASE_URL'),
+      return_url:
+        this.configService.get<Config['clientBaseUrl']>('CLIENT_BASE_URL'),
       type: 'account_onboarding',
     });
   }
@@ -69,8 +70,9 @@ export class StripeService {
         },
       },
       success_url:
-        this.configService.get<Config['clienUrl']>('CLIENT_BASE_URL'),
-      cancel_url: this.configService.get<Config['clienUrl']>('CLIENT_BASE_URL'),
+        this.configService.get<Config['clientBaseUrl']>('CLIENT_BASE_URL'),
+      cancel_url:
+        this.configService.get<Config['clientBaseUrl']>('CLIENT_BASE_URL'),
     });
   }
 

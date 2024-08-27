@@ -1,6 +1,14 @@
-import { Injectable, NotFoundException } from '@nestjs/common';
+import {
+  ConflictException,
+  ForbiddenException,
+  Injectable,
+  NotFoundException,
+} from '@nestjs/common';
 import { User, Prisma } from '@prisma/client';
-import { DefaultArgs } from '@prisma/client/runtime/library';
+import {
+  DefaultArgs,
+  PrismaClientKnownRequestError,
+} from '@prisma/client/runtime/library';
 import { IFile } from 'src/common/interfaces';
 import { PrismaService } from 'src/prisma/prisma.service';
 import { AwsS3Service } from 'src/shared/services/aws-s3/aws-s3.service';
@@ -45,9 +53,21 @@ export class UsersService {
   }
 
   async create(data: Prisma.UserCreateInput): Promise<User> {
-    return this.prisma.user.create({
-      data,
-    });
+    try {
+      const user = await this.prisma.user.create({
+        data,
+      });
+      return user;
+    } catch (error) {
+      if (error instanceof PrismaClientKnownRequestError) {
+        if (error.code === 'P2002') {
+          throw new ConflictException(
+            'Un compte existe déjà à cette adresse email.',
+          );
+        }
+      }
+      throw error;
+    }
   }
 
   async update({
